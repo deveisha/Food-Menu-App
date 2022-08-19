@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Food Menu</title>
+  </head>
+  <body>
+    <h1 style="text-align: center;">Food Menu</h1>
+    <h4  style="text-align: center;">If you buy a single burger, colddrink will be free</h4>
+    <table border="3" id="table" align="center" style="margin-top: 6%;">
+      <tr>
+        <td>Briyani</td>
+        <td>250</td>
+        <td><input type="checkbox" class="dishCheck" /></td>
+        <td><input type="number" id="1" min="1"/></td>
+      </tr>
+      <tr>
+        <td>Burger</td>
+        <td>300</td>
+        <td><input type="checkbox" id="burgerDish" class="dishCheck" /></td>
+        <td><input type="number" id="2" min="1" /></td>
+      </tr>
+     
+      <tr>
+        <td>Shawarma</td>
+        <td>150</td>
+        <td><input type="checkbox" class="dishCheck" /></td>
+        <td><input type="number" id="3" min="1"/></td>
+      </tr>
+      <tr>
+        <td>ColdDrink</td>
+        <td>100</td>
+        <td><input type="checkbox" class="dishCheck" id="coldDrink" /></td>
+        <td><input type="number" id="5" min="1"/></td>
+      </tr>
+      <tr>
+        <td>Daal</td>
+        <td>220</td>
+        <td><input type="checkbox" class="dishCheck" /></td>
+        <td><input type="number"id="4" min="1" /></td>
+      </tr>
+      <tr>
+       <td>
+        <button onclick="calFun()">Bill Calculate</button>
+       </td> 
+       <td collapse="3" id="totalBill"></td>
+    
+    </tr>
+
+    </table>
+
+<script>
+let current1=document.getElementById("1").defaultValue=1
+let current2=document.getElementById("2").defaultValue=1
+let current3=document.getElementById("3").defaultValue=1
+let current4=document.getElementById("4").defaultValue=1
+let current5=document.getElementById("5").defaultValue=1
+let orderDishes=[]
+console.log("orderDishes", orderDishes);
+
+
+const calFun=()=>{
+
+
+    let total=0;
+    let dishChecks=document.getElementsByClassName("dishCheck")
+    for(let dish of dishChecks){
+       console.log("data", dish)
+    if(dish.checked){
+
+         if(dish.parentNode.previousElementSibling.previousElementSibling.innerText=="Burger"){
+           coldDrink.checked=true;
+           let burgerQty=dish.parentNode.nextElementSibling.children[0].value;
+           coldDrink.parentNode.nextElementSibling.children[0].value=burgerQty
+         }
+         let dishPrice=dish.parentNode.previousElementSibling.innerText;
+         let qty=dish.parentNode.nextElementSibling.querySelector("input").value;
+         let pname=dish.parentNode.previousElementSibling.previousElementSibling.innerText;
+
+        //  console.log("disPrice, qty pname", pname, qty, dishPrice)
+
+         let dishData={
+           name: pname,
+           quantity: qty,
+            price: dishPrice
+         }
+
+        //  console.log("DishData", dishData);
+         orderDishes.push(dishData);
+
+
+         if(burgerDish.checked && dish.parentNode.previousElementSibling.previousElementSibling.innerText=="ColdDrink"){
+           dishPrice=0;
+         }
+
+         total+=(dishPrice*qty);
+         dishPrice.defaultValue=1
+        //  burgerDish.checked&& dish.parentNode.previousElementSibling.previousElementSibling.innerText=="ColdDrink"?
+        //    dishPrice=0: dishPrice
+    }
+   
+    }
+    totalBill.innerText=total
+}
+
+</script>
+  </body>
+</html>
